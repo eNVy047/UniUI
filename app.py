@@ -12,18 +12,25 @@ import datetime
 import platform
 from google import generativeai as genai # USE THIS
 import google.api_core.exceptions # Import specific Gemini exceptions
+from dotenv import load_dotenv
 
+
+load_dotenv()
 # --- Configuration Loading ---
 config = configparser.ConfigParser()
 config_stuff = [
     'config/prompt.ini',
     'config/gemini.ini', # Keep this for API key and model
-    'config/token.ini',
+   # 'config/token.ini',
     'config/ai_config.ini', # Keep for temp, max_tokens etc.
     'config/memory_limit.ini',
     'config/name.ini'
 ]
-config.read(config_stuff)
+
+discord_token = os.getenv("DISCORD_BOT_TOKEN")
+if not discord_token:
+    raise ValueError("Discord token not found in .env file.")
+
 
 # --- Discord/Bot Settings ---
 discord_token = config['discord']['token']
